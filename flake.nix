@@ -1,13 +1,6 @@
 {
   description = "Container images built with Nix";
 
-  nixConfig = {
-    extra-substituters = [ "https://containers-nix.cachix.org" ];
-    extra-trusted-public-keys = [
-      "containers-nix.cachix.org-1:MQLhOULaGJin4+3WN6jwF3jZiJpbBJ5QGAfLrINH9Gw="
-    ];
-  };
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
