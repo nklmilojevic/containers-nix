@@ -1,0 +1,18 @@
+{
+  "cpapdash-parser": {
+    "aarch64-linux": "sha256-JmrEbB0elAQ0zWEtRxQlCB/OZ083jxFOskJbMlF2G9o=",
+    "x86_64-linux": "sha256-JmrEbB0elAQ0zWEtRxQlCB/OZ083jxFOskJbMlF2G9o="
+  },
+  "hms-cpap": {
+    "aarch64-linux": "sha256-GCODWiZ/mGmSHDjK8EdW11SiIrYjFhPi/hRlLNd0oLc=",
+    "x86_64-linux": "sha256-GCODWiZ/mGmSHDjK8EdW11SiIrYjFhPi/hRlLNd0oLc="
+  },
+  "hms-shared": {
+    "aarch64-linux": "sha256-khmBlJIZSFIzAFWPowfgYkZ/BiRGRcBu3k5rNieGxmw=",
+    "x86_64-linux": "sha256-khmBlJIZSFIzAFWPowfgYkZ/BiRGRcBu3k5rNieGxmw="
+  },
+  "miniz": {
+    "aarch64-linux": "sha256-xLTCWk64GINEj/iSTm26lcgACUoZjcnOZqKSrC744Bg=",
+    "x86_64-linux": "sha256-xLTCWk64GINEj/iSTm26lcgACUoZjcnOZqKSrC744Bg="
+  }
+}

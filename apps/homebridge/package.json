@@ -1,0 +1,10 @@
+{
+  "name": "homebridge-image",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "homebridge": "2.4.0",
+    "homebridge-config-ui-x": "5.29.0",
+    "homebridge-unifi-protect": "8.1.0"
+  }
+}

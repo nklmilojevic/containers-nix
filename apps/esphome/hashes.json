@@ -1,0 +1,14 @@
+{
+  "esphome": {
+    "aarch64-linux": "sha256-QRgNahuLaeXu3JhgLlpUxA0aX56UKZ99SLV9Rw6QoNE=",
+    "x86_64-linux": "sha256-QRgNahuLaeXu3JhgLlpUxA0aX56UKZ99SLV9Rw6QoNE="
+  },
+  "esphome-device-builder": {
+    "aarch64-linux": "sha256-CWCArmfLJK0T81s6yC2EGXTa7ZPYSp0hm1Xw/mpo3+U=",
+    "x86_64-linux": "sha256-CWCArmfLJK0T81s6yC2EGXTa7ZPYSp0hm1Xw/mpo3+U="
+  },
+  "esphome-device-builder-frontend": {
+    "aarch64-linux": "sha256-LqTcgC1ZEj83hxeu9/OkeWLO/WanbzGXzr3QzZMk6GA=",
+    "x86_64-linux": "sha256-LqTcgC1ZEj83hxeu9/OkeWLO/WanbzGXzr3QzZMk6GA="
+  }
+}
