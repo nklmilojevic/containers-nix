@@ -10,9 +10,9 @@ let
   branch = "develop";
   hashes = helpers.readHashes ./.;
 
-  # renovate: datasource=custom.servarr-develop depName=radarr versioning=loose
-  version = "6.4.3.10645";
-  source = "https://github.com/Radarr/Radarr";
+  # renovate: datasource=custom.sonarr-develop depName=sonarr versioning=loose
+  version = "4.0.19.3009";
+  source = "https://github.com/Sonarr/Sonarr";
   systems = [
     "x86_64-linux"
     "aarch64-linux"
@@ -20,11 +20,11 @@ let
 
   updateUrl =
     arch:
-    "https://radarr.servarr.com/v1/update/${branch}/updatefile?version=${version}&os=linux&runtime=netcore&arch=${arch}";
+    "https://services.sonarr.tv/v1/update/${branch}/download?version=${version}&os=linux&runtime=netcore&arch=${arch}";
 
   sources = {
-    radarr.name = "Radarr.${branch}.${version}.linux-core.tar.gz";
-    radarr.urls = {
+    sonarr.name = "Sonarr.${branch}.${version}.linux-core.tar.gz";
+    sonarr.urls = {
       x86_64-linux = updateUrl "x64";
       aarch64-linux = updateUrl "arm64";
     };
@@ -32,9 +32,9 @@ let
 
   package = mkServarr {
     pname = name;
-    binary = "Radarr";
+    binary = "Sonarr";
     inherit version branch;
-    src = fetchSource sources hashes "radarr";
+    src = fetchSource sources hashes "sonarr";
 
   };
 
@@ -47,7 +47,7 @@ let
     ];
     env = [
       "DOTNET_EnableDiagnostics=0"
-      "RADARR__UPDATE__BRANCH=${branch}"
+      "SONARR__UPDATE__BRANCH=${branch}"
     ];
   };
 in

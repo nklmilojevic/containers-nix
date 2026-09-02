@@ -1,0 +1,6 @@
+{
+  "smartctl-exporter": {
+    "aarch64-linux": "sha256-JzU7Otyn9U3UhkF0EgQaFyYHCcck6mP1E43yYS7PQpk=",
+    "x86_64-linux": "sha256-h1mDzSev/FpoJAGTDlqO6j8GwyX+bWpyKMVUfYgmhbM="
+  }
+}

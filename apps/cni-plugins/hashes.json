@@ -1,0 +1,6 @@
+{
+  "cni-plugins": {
+    "aarch64-linux": "sha256-VhcZh9OUdwfDVj2y9AAbzK9Q/WNGhhG588vssTde5+w=",
+    "x86_64-linux": "sha256-uY90oPhSLwqDhnF4cpwapw8hWPkMRaLKj6eR2xx2swM="
+  }
+}

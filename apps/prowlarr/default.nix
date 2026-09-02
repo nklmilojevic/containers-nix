@@ -10,9 +10,9 @@ let
   branch = "develop";
   hashes = helpers.readHashes ./.;
 
-  # renovate: datasource=custom.servarr-develop depName=radarr versioning=loose
-  version = "6.4.3.10645";
-  source = "https://github.com/Radarr/Radarr";
+  # renovate: datasource=custom.servarr-develop depName=prowlarr versioning=loose
+  version = "2.6.3.5592";
+  source = "https://github.com/Prowlarr/Prowlarr";
   systems = [
     "x86_64-linux"
     "aarch64-linux"
@@ -20,11 +20,11 @@ let
 
   updateUrl =
     arch:
-    "https://radarr.servarr.com/v1/update/${branch}/updatefile?version=${version}&os=linux&runtime=netcore&arch=${arch}";
+    "https://prowlarr.servarr.com/v1/update/${branch}/updatefile?version=${version}&os=linux&runtime=netcore&arch=${arch}";
 
   sources = {
-    radarr.name = "Radarr.${branch}.${version}.linux-core.tar.gz";
-    radarr.urls = {
+    prowlarr.name = "Prowlarr.${branch}.${version}.linux-core.tar.gz";
+    prowlarr.urls = {
       x86_64-linux = updateUrl "x64";
       aarch64-linux = updateUrl "arm64";
     };
@@ -32,9 +32,9 @@ let
 
   package = mkServarr {
     pname = name;
-    binary = "Radarr";
+    binary = "Prowlarr";
     inherit version branch;
-    src = fetchSource sources hashes "radarr";
+    src = fetchSource sources hashes "prowlarr";
 
   };
 
@@ -47,7 +47,7 @@ let
     ];
     env = [
       "DOTNET_EnableDiagnostics=0"
-      "RADARR__UPDATE__BRANCH=${branch}"
+      "PROWLARR__UPDATE__BRANCH=${branch}"
     ];
   };
 in

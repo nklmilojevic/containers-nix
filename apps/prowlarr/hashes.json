@@ -1,0 +1,6 @@
+{
+  "prowlarr": {
+    "aarch64-linux": "sha256-ccQCLY7k9Rm4/gc2LkjMZ0gVD/RwkhQhcZClBzqKSbc=",
+    "x86_64-linux": "sha256-eSfBJUhZZ0KPOIjjy3WZYnN129BO2fwedoKq0AJ6W/U="
+  }
+}

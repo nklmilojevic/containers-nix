@@ -1,0 +1,6 @@
+{
+  "lidarr": {
+    "aarch64-linux": "sha256-SzxsqtRZRQrG+9hlyznIqqjaLeiKcz0ZZ2LOJSzkyoo=",
+    "x86_64-linux": "sha256-OeARu0PtYS4+AJuSgINuR7xT9u4UORkqnok4T8OCFrE="
+  }
+}

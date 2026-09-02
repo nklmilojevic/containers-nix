@@ -1,0 +1,6 @@
+{
+  "sonarr": {
+    "aarch64-linux": "sha256-WHI3nxjtBFWJUrv1xAKURejqGESsbhv8Imhgs/i3YgQ=",
+    "x86_64-linux": "sha256-m7XqmMGOyQxQf6gfzWFcP62y2oCFpxjtlVaKHGtfdbQ="
+  }
+}
