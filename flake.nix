@@ -19,8 +19,11 @@
         "aarch64-darwin"
       ];
 
+      # An app is a directory under apps/ that has a default.nix.
       appNames = builtins.attrNames (
-        lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./apps)
+        lib.filterAttrs (
+          name: type: type == "directory" && builtins.pathExists (./apps + "/${name}/default.nix")
+        ) (builtins.readDir ./apps)
       );
 
       importPkgs =
