@@ -1,0 +1,66 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["github>home-operations/renovate-config"],
+  postUpgradeTasks: {
+    commands: [],
+  },
+  nix: {
+    enabled: true,
+  },
+  customManagers: [
+    {
+      customType: "regex",
+      description: "Process Annotations in app Nix files",
+      managerFilePatterns: ["/^apps/[^/]+/default\\.nix$/"],
+      matchStrings: [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\\n.+ = \"(?<currentValue>[^\"]+)\";",
+      ],
+      datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+    },
+  ],
+  customDatasources: {
+    qbittorrent: {
+      defaultRegistryUrlTemplate: "https://github.com/userdocs/qbittorrent-nox-static/releases/latest/download/dependency-version.json",
+      format: "json",
+      transformTemplates: ['{"releases":[{"version": qbittorrent}]}'],
+    },
+    libtorrent: {
+      defaultRegistryUrlTemplate: "https://github.com/userdocs/qbittorrent-nox-static/releases/latest/download/dependency-version.json",
+      format: "json",
+      transformTemplates: ['{"releases":[{"version": libtorrent_2_0}]}'],
+    },
+    "servarr-develop": {
+      defaultRegistryUrlTemplate: "https://{{packageName}}.servarr.com/v1/update/develop/changes?os=linux&runtime=netcore",
+      format: "json",
+      transformTemplates: ['{"releases":[{"version": $[0].version}]}'],
+    },
+  },
+  packageRules: [
+    {
+      description: ["Nix Flake Updates"],
+      matchManagers: ["nix"],
+      addLabels: ["area/nix"],
+      semanticCommitType: "chore",
+      semanticCommitScope: "nix",
+      commitMessageTopic: "flake input {{depName}}",
+    },
+    {
+      description: ["Release Rules for App Updates"],
+      addLabels: ["app/{{parentDir}}"],
+      additionalBranchPrefix: "{{parentDir}}-",
+      commitMessageExtra: "( {{currentVersion}} → {{newVersion}} )",
+      commitMessageTopic: "{{depName}}",
+      matchFileNames: ["apps/**/default.nix"],
+      semanticCommitScope: "{{parentDir}}",
+      semanticCommitType: "release",
+    },
+    {
+      description: ["Auto-merge App Updates"],
+      matchFileNames: ["apps/**/default.nix"],
+      automerge: true,
+      automergeType: "pr",
+      ignoreTests: false,
+    },
+  ],
+}

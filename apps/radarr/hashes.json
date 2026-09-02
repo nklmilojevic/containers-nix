@@ -1,0 +1,6 @@
+{
+  "radarr": {
+    "aarch64-linux": "sha256-tv9yq2C0JUUB5ir4W7wFJlyOd2hfexLDvAETo84Dd7o=",
+    "x86_64-linux": "sha256-niZXuRdA+peJfzpLsEuFIgQz3spVn2IJ5d9j22GYD/8="
+  }
+}

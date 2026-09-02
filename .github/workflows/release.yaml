@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/**
+  workflow_dispatch:
+    inputs:
+      app:
+        type: string
+        description: App Name
+        required: true
+      release:
+        type: boolean
+        description: Release
+        required: false
+        default: false
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.apps.outputs.apps }}
+    steps:
+      - name: Get Changed Files
+        if: ${{ github.event_name == 'push' }}
+        uses: bjw-s-labs/action-changed-files@a9a36fb08ce06db9b02fbd8026cc2c0945eb9841 # v0.6.0
+        id: changed-files
+        with:
+          path: apps
+          include_only_directories: true
+          max_depth: 1
+
+      - name: Get Apps
+        id: apps
+        env:
+          APPS: ${{ github.event_name == 'workflow_dispatch' && format('["{0}"]', inputs.app) || steps.changed-files.outputs.changed_files }}
+        run: |-
+          echo "apps=${APPS:-[]}" >> "$GITHUB_OUTPUT"
+
+  build:
+    if: ${{ needs.prepare.outputs.apps != '[]' }}
+    name: Build ${{ matrix.app }}
+    needs:
+      - prepare
+    uses: ./.github/workflows/app-builder.yaml
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+      packages: write
+    secrets: inherit
+    strategy:
+      matrix:
+        app: ${{ fromJSON(needs.prepare.outputs.apps) }}
+      fail-fast: false
+      max-parallel: 4
+    with:
+      app: ${{ matrix.app }}
+      release: ${{ github.event_name == 'workflow_dispatch' && inputs.release || github.event_name == 'push' }}
+
+  status:
+    if: ${{ !cancelled() }}
+    name: Build Success
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Any jobs failed?
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1

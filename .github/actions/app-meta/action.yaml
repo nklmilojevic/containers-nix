@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-action.json
+name: App Meta
+description: Reads version, source and platforms for an app from the flake (Nix must already be installed)
+
+inputs:
+  app:
+    description: App Name
+    required: true
+
+outputs:
+  platforms:
+    description: Platforms (JSON array)
+    value: ${{ steps.meta.outputs.platforms }}
+  source:
+    description: Source
+    value: ${{ steps.meta.outputs.source }}
+  version:
+    description: Version
+    value: ${{ steps.meta.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - name: App Meta
+      id: meta
+      shell: bash
+      env:
+        APP: ${{ inputs.app }}
+      run: |-
+        META=$(nix eval --json ".#meta.${APP}")
+        echo "platforms=$(jq --compact-output '.platforms' <<<"${META}")" >> "$GITHUB_OUTPUT"
+        echo "source=$(jq --raw-output '.source' <<<"${META}")" >> "$GITHUB_OUTPUT"
+        echo "version=$(jq --raw-output '.version' <<<"${META}")" >> "$GITHUB_OUTPUT"

@@ -1,0 +1,60 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Hash Refresh
+
+on:
+  pull_request:
+    paths:
+      - apps/**/default.nix
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    if: ${{ startsWith(github.head_ref, 'renovate/') }}
+    name: Refresh Hashes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Get Changed Apps
+        uses: bjw-s-labs/action-changed-files@a9a36fb08ce06db9b02fbd8026cc2c0945eb9841 # v0.6.0
+        id: changed-files
+        with:
+          path: apps
+          include_only_directories: true
+          max_depth: 1
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+
+      - name: Refresh Hashes
+        env:
+          APPS: ${{ join(fromJSON(steps.changed-files.outputs.changed_files), ' ') }}
+        run: |-
+          # shellcheck disable=SC2086
+          ./scripts/update-hashes.sh ${APPS}
+
+      - name: Commit and Push
+        run: |-
+          if git diff --quiet; then
+            echo "hashes already up to date"
+            exit 0
+          fi
+          git config user.name "nkl-bot[bot]"
+          git config user.email "nkl-bot[bot]@users.noreply.github.com"
+          git add apps/*/hashes.json
+          git commit -m "chore: refresh source hashes"
+          git push

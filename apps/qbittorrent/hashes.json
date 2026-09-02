@@ -1,0 +1,10 @@
+{
+  "qbittorrent": {
+    "aarch64-linux": "sha256-3kI54MhoPia5cMJeH+J/tjNmNTAFU/jwvaLWApn2DtE=",
+    "x86_64-linux": "sha256-wYOcr5t9vd7gnppDlLtbF9xw7NfDqbRehDMdWhOJpkU="
+  },
+  "qbittorrent-cli": {
+    "aarch64-linux": "sha256-6keDBapvtB/eih/GNJ16J+wV+q1FXAIkFBaRSysOQy4=",
+    "x86_64-linux": "sha256-XuNoHbOKIPvnGJ/bPDLyRdyMf+8+FN62Q6fPgO89tKA="
+  }
+}
