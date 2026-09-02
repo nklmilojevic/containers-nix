@@ -38,6 +38,9 @@ pkgs.stdenv.mkDerivation {
     runHook preInstall
     mkdir -p $out/lib/${pname}/bin $out/bin
     cp -r . $out/lib/${pname}/bin
+    # libmsalruntime.so is the Microsoft desktop auth broker (x64 only); it links
+    # GTK/WebKit and is unused by a headless server.
+    rm -f $out/lib/${pname}/bin/libmsalruntime*.so
     rm -rf $out/lib/${pname}/bin/${binary}.Update ${
       lib.concatMapStringsSep " " (f: "$out/lib/${pname}/bin/${f}") removeFiles
     }
